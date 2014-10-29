@@ -114,7 +114,7 @@ public class AllContactsFragment extends Fragment {
                 System.out.println(bitmap.getWidth()+" "+bitmap.getHeight());
 //                Toast.makeText(ma.getApplicationContext()
 //                        , uri.getPath(), Toast.LENGTH_LONG).show();
-                //test
+                
                 
                 fp.FaceIdentify(bitmap);
             } catch (Exception e) {
