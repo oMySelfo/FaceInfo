@@ -31,8 +31,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class AllContactsFragment extends Fragment {
-	public AllContactsFragment() {
-	}
+	public AllContactsFragment() {}
 
 	FaceProcessing fp;
 	Uri uri;
@@ -100,20 +99,21 @@ public class AllContactsFragment extends Fragment {
 		});
 		return rootView;
 	}
+	
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK) {
-            ma.getContentResolver().notifyChange(uri, null);
-            
+            ma.getContentResolver().notifyChange(uri, null); 
+            ma.displayView(9);
             ContentResolver cr = ma.getContentResolver();
             try {
                 Bitmap bitmap = Media.getBitmap(cr, uri);
                 //imageView.setImageBitmap(bitmap);
                 System.out.println(bitmap.getWidth()+" "+bitmap.getHeight());
-                Toast.makeText(ma.getApplicationContext()
-                        , uri.getPath(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(ma.getApplicationContext()
+//                        , uri.getPath(), Toast.LENGTH_LONG).show();
                 
                 fp.FaceIdentify(bitmap);
             } catch (Exception e) {

@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
 		SetMenuSliding();
 	}
 
-	private void displayView(int position) {
+	public void displayView(int position) {
 		// update the main content by replacing fragments
 		Fragment fragment = null;
 		switch (position) {
@@ -94,6 +94,10 @@ public class MainActivity extends Activity {
 			break;
 		case 1:
 			fragment = new AboutusFragment();
+			break;
+		case 9:
+			fragment = new ShowinfoFragment();
+			break;
 		default:
 			break;
 		}
