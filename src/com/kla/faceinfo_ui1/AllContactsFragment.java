@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -37,6 +39,7 @@ public class AllContactsFragment extends Fragment {
 	Uri uri;
 	MainActivity ma;
 	public static final int REQUEST_CAMERA = 2;
+	JSONObject result;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -45,7 +48,9 @@ public class AllContactsFragment extends Fragment {
 				container, false);
 		ma = (MainActivity) this.getActivity();
 		fp = ma.getFaceProcessing();//////////////////////////////////
-
+		result = ma.getResult();
+		
+		
 		TextView tv = (TextView) rootView.findViewById(R.id.amount_friends);
 		tv.setTypeface(ma.tf);
 		tv.setText(ma.data.length + " FRIENDS");
@@ -106,17 +111,19 @@ public class AllContactsFragment extends Fragment {
 		// TODO Auto-generated method stub
 		if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK) {
             ma.getContentResolver().notifyChange(uri, null); 
-            ma.displayView(9);
             ContentResolver cr = ma.getContentResolver();
             try {
                 Bitmap bitmap = Media.getBitmap(cr, uri);
                 //imageView.setImageBitmap(bitmap);
                 System.out.println(bitmap.getWidth()+" "+bitmap.getHeight());
-//                Toast.makeText(ma.getApplicationContext()
-//                        , uri.getPath(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ma.getApplicationContext()
+                        , uri.getPath(), Toast.LENGTH_LONG).show();
                 
+               
+                result = fp.FaceIdentify(bitmap);
+                ma.setResult(result);
+                ma.displayView(9);
                 
-                fp.FaceIdentify(bitmap);
             } catch (Exception e) {
                  e.printStackTrace();
             }

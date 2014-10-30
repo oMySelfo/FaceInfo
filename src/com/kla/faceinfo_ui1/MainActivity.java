@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import com.facepp.http.HttpRequests;
 
 import android.app.Activity;
@@ -29,12 +31,14 @@ public class MainActivity extends Activity {
 	private CharSequence mDrawerTitle;
 	private FaceProcessing fp;
 	Typeface tf;
+	public JSONObject result;
 
 	String[][] data = new String[][] { { "Fah", R.drawable.fah + "" },
 			{ "Jay", R.drawable.jay + "" }, { "Kla", R.drawable.kla + "" },
 			{ "Mhee", R.drawable.mhee + "" },
 			{ "P'Mike", R.drawable.mike + "" },
-			{ "Plam", R.drawable.palm + "" }, { "Tae", R.drawable.tae + "" } };
+			{ "Plam", R.drawable.palm + "" }, { "Tae", R.drawable.tae + "" } ,
+			{ "Coach", R.drawable.coach + "" }};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +183,13 @@ public class MainActivity extends Activity {
 	
 	public FaceProcessing getFaceProcessing(){
 		return fp;
+	}
+	
+	public JSONObject getResult(){
+		return result;
+	}
+	public void setResult(JSONObject res){
+		this.result = res;
 	}
 
 }
