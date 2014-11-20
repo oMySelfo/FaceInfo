@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -102,6 +103,9 @@ public class MainActivity extends Activity {
 		case 9:
 			fragment = new ShowinfoFragment();
 			break;
+		case 10:
+			fragment = new AddINFOFragment();
+			break;
 		default:
 			break;
 		}
@@ -146,12 +150,12 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	// @Override
-	// public boolean onCreateOptionsMenu(Menu menu) {
-	// getMenuInflater().inflate(R.menu.main, menu);
-	// return true;
-	// }
-	//
+	 @Override
+	 public boolean onCreateOptionsMenu(Menu menu) {
+	 getMenuInflater().inflate(R.menu.main, menu);
+	 return true;
+	 }
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -160,7 +164,10 @@ public class MainActivity extends Activity {
 
 		// Handle action bar actions click
 		switch (item.getItemId()) {
-		case R.id.action_settings:
+//		case R.id.action_settings:
+//			return true;
+		case R.id.bt_plus:
+			displayView(10);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
