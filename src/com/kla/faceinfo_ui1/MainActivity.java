@@ -198,5 +198,10 @@ public class MainActivity extends Activity {
 	public void setResult(JSONObject res){
 		this.result = res;
 	}
+	
+	@Override
+    public void onBackPressed() {
+		displayView(0);
+	}
 
 }
