@@ -106,6 +106,9 @@ public class MainActivity extends Activity {
 		case 10:
 			fragment = new AddINFOFragment();
 			break;
+		case 2:
+			fragment = new TestFacebookDatabaseFrangment();
+			break;
 		default:
 			break;
 		}
@@ -125,11 +128,12 @@ public class MainActivity extends Activity {
 	private void SetMenuSliding() {
 		String[][] dataSliding = new String[][] {
 				{ R.drawable.ic_contacts + "", "All Contacts" },
-				{ R.drawable.ic_aboutus + "", "About Us" } };
+				{ R.drawable.ic_aboutus + "", "About Us" } ,
+				{ R.drawable.ic_aboutus + "", "Test" } };
 		String[] from = { "icon", "title" };
 		int[] to = { R.id.icon, R.id.title };
 		List<HashMap<String, String>> listSliding = new ArrayList<HashMap<String, String>>();
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 3; i++) { // Test
 			HashMap<String, String> hm = new HashMap<String, String>();
 			hm.put("icon", dataSliding[i][0]);
 			hm.put("title", dataSliding[i][1]);
