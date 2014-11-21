@@ -57,7 +57,9 @@ public class MainActivity extends Activity {
 
 		if (savedInstanceState == null) {
 			// on first time display view
-			displayView(0);
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction()
+					.replace(R.id.frame_container, new AllContactsFragment()).commit();
 		}
 		
 		 new Thread(new Runnable() {
@@ -114,7 +116,7 @@ public class MainActivity extends Activity {
 		}
 		if (fragment != null) {
 			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.beginTransaction()
+			fragmentManager.beginTransaction().addToBackStack(null)
 					.replace(R.id.frame_container, fragment).commit();
 
 			mDrawerList.setItemChecked(position, true);
@@ -203,9 +205,5 @@ public class MainActivity extends Activity {
 		this.result = res;
 	}
 	
-	@Override
-    public void onBackPressed() {
-		displayView(0);
-	}
 
 }
