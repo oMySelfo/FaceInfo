@@ -11,11 +11,12 @@ import android.webkit.WebChromeClient.CustomViewCallback;
 
 public class DBManager extends SQLiteOpenHelper {
 	private static String Schema = "faceinfo";
-	private String tableName = "members";
+	private String tableName = "";
 	
 
-	public DBManager(Context context) {
+	public DBManager(Context context,String tableName) {
 		super(context, Schema, null, 1);
+		this.tableName=tableName;
 		// TODO Auto-generated constructor stub
 	}
 
