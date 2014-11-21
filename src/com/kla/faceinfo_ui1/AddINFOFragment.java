@@ -74,7 +74,6 @@ public class AddINFOFragment extends Fragment {
 		btn= new Button(ma);
 		btn.setText("Add another field");
 		registerForContextMenu(btn);
-		
 		btn.setOnClickListener(new OnClickListener() {
 			
 			@Override

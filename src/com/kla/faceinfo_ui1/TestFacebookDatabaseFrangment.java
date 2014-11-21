@@ -24,19 +24,15 @@ public class TestFacebookDatabaseFrangment extends Fragment{
 		
 		ma = (MainActivity) this.getActivity();
 		
-		btnLogin = new Button(ma);
-		btnLogin.findViewById(R.id.login_facebook_button);
-		btnReset = new Button(ma);
-		btnReset.findViewById(R.id.reset_button);
-		txtDetail = new TextView(ma);
-		txtDetail.findViewById(R.id.facebook_detail_text);
+		btnLogin = (Button) rootView.findViewById(R.id.login_facebook_button);
+		btnReset = (Button) rootView.findViewById(R.id.reset_button);
+		txtDetail = (TextView) rootView.findViewById(R.id.facebook_detail_text);
+		
 		
 
 		btnLogin.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				
 				txtDetail.setText("Login");
 				System.out.println("Login");
 				
