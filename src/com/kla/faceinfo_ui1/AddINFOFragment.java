@@ -56,7 +56,6 @@ public class AddINFOFragment extends Fragment {
 			public void onClick(View v) {
 				((Button) v).showContextMenu();
 				// TODO Auto-generated method stub
-				
 			}
 		});
 		LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.layout);

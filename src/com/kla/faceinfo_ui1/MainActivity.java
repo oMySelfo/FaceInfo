@@ -2,7 +2,6 @@ package com.kla.faceinfo_ui1;
 
 import group.GrouplistFragment;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +52,7 @@ public class MainActivity extends Activity {
 
 		mTitle = mDrawerTitle = getTitle();
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-		
+
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
@@ -74,9 +73,8 @@ public class MainActivity extends Activity {
 				fp = new FaceProcessing("kla7016");
 			}
 		}).start();
-		
-		System.out.println("Mtitle=====:   "+mTitle);
-        
+
+		System.out.println("Mtitle=====:   " + mTitle);
 
 	}
 
@@ -133,7 +131,11 @@ public class MainActivity extends Activity {
 
 			mDrawerList.setItemChecked(position, true);
 			mDrawerList.setSelection(position);
-			setTitle(navMenuTitles[position]);
+			if (position == 10) {
+				setTitle("AddINFO");
+			} else {
+				setTitle(navMenuTitles[position]);
+			}
 			mDrawerLayout.closeDrawer(mDrawerList);
 		} else {
 			Log.e("MainActivity", "Error in creating fragment");
@@ -208,8 +210,7 @@ public class MainActivity extends Activity {
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
-	
-	
+
 	@Override
 	public void setTitle(CharSequence title) {
 		mTitle = title;
