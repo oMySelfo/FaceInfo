@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">FaceINFO_UI1</string>
+    <string name="app_name">FaceINFO</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    
+    <string-array name="nav_drawer_items">
+        <item >ALL Contacts</item>
+        <item >About us</item>
+        <item >Group</item>
+        <item >Test</item>
+    </string-array>
 
 </resources>

@@ -1,5 +1,8 @@
 package com.kla.faceinfo_ui1;
 
+import group.GrouplistFragment;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +33,7 @@ public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private CharSequence mTitle;
 	private CharSequence mDrawerTitle;
+	private String[] navMenuTitles;
 	private FaceProcessing fp;
 	Typeface tf;
 	public JSONObject result;
@@ -38,8 +42,8 @@ public class MainActivity extends Activity {
 			{ "Jay", R.drawable.jay + "" }, { "Kla", R.drawable.kla + "" },
 			{ "Mhee", R.drawable.mhee + "" },
 			{ "P'Mike", R.drawable.mike + "" },
-			{ "Plam", R.drawable.palm + "" }, { "Tae", R.drawable.tae + "" } ,
-			{ "Coach", R.drawable.coach + "" }};
+			{ "Plam", R.drawable.palm + "" }, { "Tae", R.drawable.tae + "" },
+			{ "Coach", R.drawable.coach + "" } };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,8 @@ public class MainActivity extends Activity {
 		tf = Typeface.createFromAsset(getAssets(), "SukhumvitSet.ttc");
 
 		mTitle = mDrawerTitle = getTitle();
+		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+		
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
@@ -59,16 +65,18 @@ public class MainActivity extends Activity {
 			// on first time display view
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
-					.replace(R.id.frame_container, new AllContactsFragment()).commit();
+					.replace(R.id.frame_container, new AllContactsFragment())
+					.commit();
 		}
+
+		new Thread(new Runnable() {
+			public void run() {
+				fp = new FaceProcessing("kla7016");
+			}
+		}).start();
 		
-		 new Thread(new Runnable() {
-				public void run() {
-					fp = new FaceProcessing("kla7016");
-				}
-			}).start();
-		
-		
+		System.out.println("Mtitle=====:   "+mTitle);
+        
 
 	}
 
@@ -102,15 +110,19 @@ public class MainActivity extends Activity {
 		case 1:
 			fragment = new AboutusFragment();
 			break;
+		case 2:
+			fragment = new GrouplistFragment();
+			break;
+		case 3:
+			fragment = new TestFacebookDatabaseFrangment();
+			break;
 		case 9:
 			fragment = new ShowinfoFragment();
 			break;
 		case 10:
 			fragment = new AddINFOFragment();
 			break;
-		case 2:
-			fragment = new TestFacebookDatabaseFrangment();
-			break;
+
 		default:
 			break;
 		}
@@ -121,6 +133,7 @@ public class MainActivity extends Activity {
 
 			mDrawerList.setItemChecked(position, true);
 			mDrawerList.setSelection(position);
+			setTitle(navMenuTitles[position]);
 			mDrawerLayout.closeDrawer(mDrawerList);
 		} else {
 			Log.e("MainActivity", "Error in creating fragment");
@@ -130,12 +143,14 @@ public class MainActivity extends Activity {
 	private void SetMenuSliding() {
 		String[][] dataSliding = new String[][] {
 				{ R.drawable.ic_contacts + "", "All Contacts" },
-				{ R.drawable.ic_aboutus + "", "About Us" } ,
+				{ R.drawable.ic_aboutus + "", "About Us" },
+				{ R.drawable.ic_group + "", "Group" },
 				{ R.drawable.ic_aboutus + "", "Test" } };
+
 		String[] from = { "icon", "title" };
 		int[] to = { R.id.icon, R.id.title };
 		List<HashMap<String, String>> listSliding = new ArrayList<HashMap<String, String>>();
-		for (int i = 0; i < 3; i++) { // Test
+		for (int i = 0; i < dataSliding.length; i++) { // Test
 			HashMap<String, String> hm = new HashMap<String, String>();
 			hm.put("icon", dataSliding[i][0]);
 			hm.put("title", dataSliding[i][1]);
@@ -156,12 +171,12 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	 @Override
-	 public boolean onCreateOptionsMenu(Menu menu) {
-	 getMenuInflater().inflate(R.menu.main, menu);
-	 return true;
-	 }
-	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -170,8 +185,8 @@ public class MainActivity extends Activity {
 
 		// Handle action bar actions click
 		switch (item.getItemId()) {
-//		case R.id.action_settings:
-//			return true;
+		// case R.id.action_settings:
+		// return true;
 		case R.id.bt_plus:
 			displayView(10);
 			return true;
@@ -193,17 +208,17 @@ public class MainActivity extends Activity {
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
-	
-	public FaceProcessing getFaceProcessing(){
+
+	public FaceProcessing getFaceProcessing() {
 		return fp;
 	}
-	
-	public JSONObject getResult(){
+
+	public JSONObject getResult() {
 		return result;
 	}
-	public void setResult(JSONObject res){
+
+	public void setResult(JSONObject res) {
 		this.result = res;
 	}
-	
 
 }

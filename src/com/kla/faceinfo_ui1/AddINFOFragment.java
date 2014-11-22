@@ -22,14 +22,14 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 public class AddINFOFragment extends Fragment {
-	public AddINFOFragment() {
-	}
+	public AddINFOFragment() {}
+	
 	CreateEdittext edittext;
 	MainActivity ma;
 	List<CreateEdittext> edit;
 	View rootView;
 	Button btn;
-	String[] Namemenu = new String[]{"Full Name","Facebook","Twitter","Email","Birthday","Address","Others"};
+	String[] Namemenu = new String[]{"Full Name","Facebook","Twitter","Birthday","Address","Others"};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,37 +38,13 @@ public class AddINFOFragment extends Fragment {
 				false);
 		edit = new ArrayList<CreateEdittext>();
 		ma = (MainActivity) this.getActivity();
-		for(int i=0;i<7;i++){
+		for(int i=0;i<Namemenu.length;i++){
 			edittext = new CreateEdittext(ma);
 			edittext.setId(i);
 			edittext.setWidth(dpToPx(340));
 			edittext.setHint(Namemenu[i]);
-//			switch(i){
-//			case 0:
-//				edittext.setHint("Full Name");
-//				break;
-//			case 1:
-//				edittext.setHint("Facebook");
-//				break;
-//			case 2:
-//				edittext.setHint("Twitter");
-//				break;
-//			case 3:
-//				edittext.setHint("Email");
-//				break;
-//			case 4:
-//				edittext.setHint("Birthday");
-//				break;
-//			case 5:
-//				edittext.setHint("Address");
-//				break;
-//			case 6:
-//				edittext.setHint("Others");
-//				break;
-//			}
 			edittext.setShow(false);
 			edit.add(edittext);
-			
 		}
 		
 		btn= new Button(ma);
@@ -85,15 +61,6 @@ public class AddINFOFragment extends Fragment {
 		});
 		LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.layout);
 		layout.addView(btn);
-//		Button bt_field = (Button) rootView.findViewById(R.id.bt_field);
-//		registerForContextMenu(bt_field);
-//		bt_field.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				((Button) v).showContextMenu();
-//			}
-//		});
 		return rootView;
 	}
 
@@ -104,14 +71,13 @@ public class AddINFOFragment extends Fragment {
 		menu.add(0, v.getId(), 0, "Full Name");
 		menu.add(0, v.getId(), 0, "Facebook");
 		menu.add(0, v.getId(), 0, "Twitter");
-		menu.add(0, v.getId(), 0, "Email");
 		menu.add(0, v.getId(), 0, "Birthday");
 		menu.add(0, v.getId(), 0, "Address");
 		menu.add(0, v.getId(), 0, "Others");
 	}
 
 	public boolean onContextItemSelected(MenuItem item) {
-		for(int i=0;i<7;i++){
+		for(int i=0;i< Namemenu.length;i++){
 			if(item.getTitle().equals(Namemenu[i])){
 				if(!edit.get(i).isShow()){
 					edit.get(i).setShow(true);
@@ -133,17 +99,7 @@ public class AddINFOFragment extends Fragment {
 			}
 			
 		}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-//		if (item.getTitle() == "Full Name") {
-//			
-//
-//			//System.out.println("Full Name");
-//		} else if (item.getTitle() == "Facebook") {
-//			
-//		} else if (item.getTitle() == "Twitter") {
-//			
-//		} else {
-//			return false;
-//		}
+
 		return true;
 	}
 	public int dpToPx(int dp)
