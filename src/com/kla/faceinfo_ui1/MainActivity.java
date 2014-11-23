@@ -74,7 +74,6 @@ public class MainActivity extends Activity {
 			}
 		}).start();
 
-		System.out.println("Mtitle=====:   " + mTitle);
 
 	}
 
@@ -133,7 +132,7 @@ public class MainActivity extends Activity {
 			mDrawerList.setSelection(position);
 			if (position == 10) {
 				setTitle("AddINFO");
-			} else {
+			} else{
 				setTitle(navMenuTitles[position]);
 			}
 			mDrawerLayout.closeDrawer(mDrawerList);
