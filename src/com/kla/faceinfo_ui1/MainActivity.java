@@ -1,5 +1,7 @@
 package com.kla.faceinfo_ui1;
 
+import group.GrouplistFragment;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -113,6 +115,9 @@ public class MainActivity extends Activity {
 		case 2:
 			fragment = new TestFacebookDatabaseFrangment();
 			break;
+		case 3:
+			fragment = new GrouplistFragment();
+			break;
 		default:
 			break;
 		}
@@ -138,11 +143,12 @@ public class MainActivity extends Activity {
 		String[][] dataSliding = new String[][] {
 				{ R.drawable.ic_contacts + "", "All Contacts" },
 				{ R.drawable.ic_aboutus + "", "About Us" },
-				{ R.drawable.ic_aboutus + "", "Test" } };
+				{ R.drawable.ic_aboutus + "", "Test" },
+				{R.drawable.ic_group+"","Group"}};
 		String[] from = { "icon", "title" };
 		int[] to = { R.id.icon, R.id.title };
 		List<HashMap<String, String>> listSliding = new ArrayList<HashMap<String, String>>();
-		for (int i = 0; i < 3; i++) { // Test
+		for (int i = 0; i < dataSliding.length; i++) { // Test
 			HashMap<String, String> hm = new HashMap<String, String>();
 			hm.put("icon", dataSliding[i][0]);
 			hm.put("title", dataSliding[i][1]);
