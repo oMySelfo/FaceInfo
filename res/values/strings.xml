@@ -4,6 +4,7 @@
     <string name="app_name">FaceINFO</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="app_id">219333394936042</string>
     
     <string-array name="nav_drawer_items">
         <item >All Contacts</item>

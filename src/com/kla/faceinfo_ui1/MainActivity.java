@@ -9,10 +9,12 @@ import java.util.List;
 import org.json.JSONObject;
 
 import com.facepp.http.HttpRequests;
+import com.sromku.simple.fb.SimpleFacebook;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -36,6 +38,7 @@ public class MainActivity extends Activity {
 	private FaceProcessing fp;
 	Typeface tf;
 	public JSONObject result;
+	private SimpleFacebook mSimpleFacebook;
 
 	String[][] data = new String[][] { { "Fah", R.drawable.fah + "" },
 			{ "Jay", R.drawable.jay + "" }, { "Kla", R.drawable.kla + "" },
@@ -50,6 +53,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		tf = Typeface.createFromAsset(getAssets(), "SukhumvitSet.ttc");
 
+		mSimpleFacebook = SimpleFacebook.getInstance(this);
+		
 		mTitle = mDrawerTitle = getTitle();
 		
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
@@ -223,6 +228,17 @@ public class MainActivity extends Activity {
 
 	public void setResult(JSONObject res) {
 		this.result = res;
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mSimpleFacebook = SimpleFacebook.getInstance(this);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		mSimpleFacebook.onActivityResult(this, requestCode, resultCode, data);
 	}
 
 }
