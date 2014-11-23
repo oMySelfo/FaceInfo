@@ -36,6 +36,7 @@ public class AddINFOFragment extends Fragment {
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.activity_addinfo, container,
 				false);
+		
 		edit = new ArrayList<CreateEdittext>();
 		ma = (MainActivity) this.getActivity();
 		for(int i=0;i<Namemenu.length;i++){
