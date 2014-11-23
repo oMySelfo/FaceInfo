@@ -1,5 +1,6 @@
 package com.kla.faceinfo_ui1;
 
+import group.AddGroupFragment;
 import group.GrouplistFragment;
 
 import java.util.ArrayList;
@@ -119,6 +120,9 @@ public class MainActivity extends Activity {
 		case 10:
 			fragment = new AddINFOFragment();
 			break;
+		case 11:
+			fragment = new AddGroupFragment();
+			break;
 
 		default:
 			break;
@@ -132,7 +136,10 @@ public class MainActivity extends Activity {
 			mDrawerList.setSelection(position);
 			if (position == 10) {
 				setTitle("AddINFO");
-			} else{
+			} else if(position == 11){
+				setTitle("AddGroup");
+			}
+			else{
 				setTitle(navMenuTitles[position]);
 			}
 			mDrawerLayout.closeDrawer(mDrawerList);

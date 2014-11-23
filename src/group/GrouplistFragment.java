@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -21,8 +22,8 @@ public class GrouplistFragment extends Fragment{
 	public GrouplistFragment() {}
 	
 	
-	String[][] dataGroup = new String[][] { { "Friends", R.drawable.friends + "" },
-			{ "Family", R.drawable.family + "" },{"Work", R.drawable.work + "" }};
+	String[][] dataGroup = new String[][] { { "Friends", R.drawable.friend_cl + "" },
+			{ "Family", R.drawable.family_cl + "" },{"Work", R.drawable.work_cl + "" }};
 	
 	
 	@Override
@@ -52,6 +53,16 @@ public class GrouplistFragment extends Fragment{
 				R.layout.acitivity_rowgroup, from, to);
 		ListView listViewGroup = (ListView) rootView.findViewById(R.id.listgroup);
 		listViewGroup.setAdapter(adapter);
+		
+		
+		ImageButton bt_addGroup = (ImageButton) rootView.findViewById(R.id.btn_addgrop);
+		bt_addGroup.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ma.displayView(11);	
+			}
+		});
 		
 		
 		
