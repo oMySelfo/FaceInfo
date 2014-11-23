@@ -30,6 +30,7 @@ public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private CharSequence mTitle;
 	private CharSequence mDrawerTitle;
+	private String[] navMenuTitles;
 	private FaceProcessing fp;
 	Typeface tf;
 	public JSONObject result;
@@ -48,6 +49,8 @@ public class MainActivity extends Activity {
 		tf = Typeface.createFromAsset(getAssets(), "SukhumvitSet.ttc");
 
 		mTitle = mDrawerTitle = getTitle();
+		
+		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
@@ -119,6 +122,11 @@ public class MainActivity extends Activity {
 					.replace(R.id.frame_container, fragment).commit();
 
 			mDrawerList.setItemChecked(position, true);
+			if (position == 10) {
+				setTitle("AddINFO");
+			}else{
+				setTitle(navMenuTitles[position]);
+			}
 			mDrawerList.setSelection(position);
 			mDrawerLayout.closeDrawer(mDrawerList);
 		} else {
@@ -197,6 +205,12 @@ public class MainActivity extends Activity {
 		return fp;
 	}
 
+	@Override
+	public void setTitle(CharSequence title) {
+		mTitle = title;
+		getActionBar().setTitle(mTitle);
+	}
+	
 	public JSONObject getResult() {
 		return result;
 	}
