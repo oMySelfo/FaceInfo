@@ -1,4 +1,4 @@
-package com.kla.faceinfo_ui1;
+package com.kla.database;
 
 import android.content.ContentValues;
 import android.content.Context;
