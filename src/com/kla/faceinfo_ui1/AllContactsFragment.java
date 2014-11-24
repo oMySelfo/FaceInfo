@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +82,9 @@ public class AllContactsFragment extends Fragment {
                 TextView txt = (TextView) linearLayoutChild.getChildAt(0);
                 String tv = txt.getText().toString();
                 System.out.println(tv);
+                ma.profilename = tv;
+                ma.setTitle(tv);
+                ma.displayView(13);
             }
         });
 

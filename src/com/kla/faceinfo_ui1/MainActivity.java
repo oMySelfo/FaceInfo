@@ -44,6 +44,8 @@ public class MainActivity extends Activity {
 	public JSONObject result;
 	private SimpleFacebook mSimpleFacebook;
 	public String namegroup2;
+	public String profilename;
+	
 
 	public String[][] data = new String[][] { { "Fah", R.drawable.fah + "" },
 			{ "Jay", R.drawable.jay + "" }, { "Kla", R.drawable.kla + "" },
@@ -59,9 +61,9 @@ public class MainActivity extends Activity {
 		tf = Typeface.createFromAsset(getAssets(), "SukhumvitSet.ttc");
 
 		mSimpleFacebook = SimpleFacebook.getInstance(this);
-		
+
 		mTitle = mDrawerTitle = getTitle();
-		
+
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
@@ -83,8 +85,6 @@ public class MainActivity extends Activity {
 				fp = new FaceProcessing("kla7016");
 			}
 		}).start();
-		
-
 
 	}
 
@@ -136,6 +136,9 @@ public class MainActivity extends Activity {
 		case 12:
 			fragment = new PeopleOfGroup();
 			break;
+		case 13:
+			fragment = new ShowProfile();
+			break;
 		default:
 			break;
 		}
@@ -145,17 +148,17 @@ public class MainActivity extends Activity {
 					.replace(R.id.frame_container, fragment).commit();
 
 			mDrawerList.setItemChecked(position, true);
-			
-			if(position <= 8){
+
+			if (position <= 8) {
 				setTitle(navMenuTitles[position]);
-			}else if (position == 10) {
+			} else if (position == 10) {
 				setTitle("AddINFO");
-			}else if(position ==11){
+			} else if (position == 11) {
 				setTitle("AddGroup");
-			}
+			} 
 			mDrawerList.setSelection(position);
 			mDrawerLayout.closeDrawer(mDrawerList);
-		}else {
+		} else {
 			Log.e("MainActivity", "Error in creating fragment");
 		}
 	}
@@ -165,7 +168,7 @@ public class MainActivity extends Activity {
 				{ R.drawable.ic_contacts + "", "All Contacts" },
 				{ R.drawable.ic_aboutus + "", "About Us" },
 				{ R.drawable.ic_aboutus + "", "Test" },
-				{R.drawable.ic_group+"","Group"}};
+				{ R.drawable.ic_group + "", "Group" } };
 		String[] from = { "icon", "title" };
 		int[] to = { R.id.icon, R.id.title };
 		List<HashMap<String, String>> listSliding = new ArrayList<HashMap<String, String>>();
@@ -237,7 +240,7 @@ public class MainActivity extends Activity {
 		mTitle = title;
 		getActionBar().setTitle(mTitle);
 	}
-	
+
 	public JSONObject getResult() {
 		return result;
 	}
@@ -245,6 +248,7 @@ public class MainActivity extends Activity {
 	public void setResult(JSONObject res) {
 		this.result = res;
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
