@@ -59,6 +59,7 @@ public class AddINFOFragment extends Fragment {
 			edittext.setShow(false);
 			edit.add(edittext);
 		}
+		
 
 		btn = new Button(ma);
 		btn.setText("Add another field");
