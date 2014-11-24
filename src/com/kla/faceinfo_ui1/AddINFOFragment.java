@@ -1,10 +1,13 @@
 package com.kla.faceinfo_ui1;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import widget.CreateEdittext;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +20,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SimpleAdapter;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -29,6 +34,8 @@ public class AddINFOFragment extends Fragment {
 	List<CreateEdittext> edit;
 	View rootView;
 	Button btn;
+	
+	
 	String[] Namemenu = new String[]{"Full Name","Facebook","Twitter","Birthday","Address","Others"};
 
 	@Override
@@ -37,6 +44,7 @@ public class AddINFOFragment extends Fragment {
 		rootView = inflater.inflate(R.layout.activity_addinfo, container,
 				false);
 		
+
 		edit = new ArrayList<CreateEdittext>();
 		ma = (MainActivity) this.getActivity();
 		for(int i=0;i<Namemenu.length;i++){
