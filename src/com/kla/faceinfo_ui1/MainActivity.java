@@ -1,6 +1,9 @@
 package com.kla.faceinfo_ui1;
 
 import facebook.TestFacebookDatabaseFrangment;
+import group.AddGroupFragment;
+import group.PeopleOfGroup;
+
 import group.GrouplistFragment;
 
 import java.util.ArrayList;
@@ -40,8 +43,9 @@ public class MainActivity extends Activity {
 	Typeface tf;
 	public JSONObject result;
 	private SimpleFacebook mSimpleFacebook;
+	public String namegroup2;
 
-	String[][] data = new String[][] { { "Fah", R.drawable.fah + "" },
+	public String[][] data = new String[][] { { "Fah", R.drawable.fah + "" },
 			{ "Jay", R.drawable.jay + "" }, { "Kla", R.drawable.kla + "" },
 			{ "Mhee", R.drawable.mhee + "" },
 			{ "P'Mike", R.drawable.mike + "" },
@@ -79,6 +83,8 @@ public class MainActivity extends Activity {
 				fp = new FaceProcessing("kla7016");
 			}
 		}).start();
+		
+
 
 	}
 
@@ -112,17 +118,23 @@ public class MainActivity extends Activity {
 		case 1:
 			fragment = new AboutusFragment();
 			break;
+		case 2:
+			fragment = new TestFacebookDatabaseFrangment();
+			break;
+		case 3:
+			fragment = new GrouplistFragment();
+			break;
 		case 9:
 			fragment = new ShowinfoFragment();
 			break;
 		case 10:
 			fragment = new AddINFOFragment();
 			break;
-		case 2:
-			fragment = new TestFacebookDatabaseFrangment();
+		case 11:
+			fragment = new AddGroupFragment();
 			break;
-		case 3:
-			fragment = new GrouplistFragment();
+		case 12:
+			fragment = new PeopleOfGroup();
 			break;
 		default:
 			break;
@@ -133,14 +145,17 @@ public class MainActivity extends Activity {
 					.replace(R.id.frame_container, fragment).commit();
 
 			mDrawerList.setItemChecked(position, true);
-			if (position == 10) {
-				setTitle("AddINFO");
-			}else{
+			
+			if(position <= 8){
 				setTitle(navMenuTitles[position]);
+			}else if (position == 10) {
+				setTitle("AddINFO");
+			}else if(position ==11){
+				setTitle("AddGroup");
 			}
 			mDrawerList.setSelection(position);
 			mDrawerLayout.closeDrawer(mDrawerList);
-		} else {
+		}else {
 			Log.e("MainActivity", "Error in creating fragment");
 		}
 	}

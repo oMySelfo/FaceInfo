@@ -78,8 +78,8 @@ public class AllContactsFragment extends Fragment {
                 LinearLayout linearLayoutParent = (LinearLayout) container;
                 LinearLayout linearLayoutChild = (LinearLayout ) linearLayoutParent.getChildAt(1);
 
-                TextView tvEN = (TextView) linearLayoutChild.getChildAt(0);
-                String tv = tvEN.getText().toString();
+                TextView txt = (TextView) linearLayoutChild.getChildAt(0);
+                String tv = txt.getText().toString();
                 System.out.println(tv);
             }
         });

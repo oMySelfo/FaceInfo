@@ -15,8 +15,7 @@ import android.widget.Spinner;
 
 
 public class AddGroupFragment extends Fragment {
-	public AddGroupFragment() {
-	}
+	public AddGroupFragment() {}
 
 	String arr_images[] = { R.drawable.family_cl + "", R.drawable.friend_cl + "",
 			R.drawable.work_cl + "" };
@@ -30,12 +29,13 @@ public class AddGroupFragment extends Fragment {
 		
 		View rootView = inflater.inflate(R.layout.actitvity_addgroup,
 				container, false);
-		
+		System.out.println("TESSSSSS");
 		
 		Spinner spinnerPicGroup = (Spinner) rootView
 				.findViewById(R.id.spinner_picgroup);
-		spinnerPicGroup.setAdapter(new MyAdapter(ma,
-				R.layout.activity_rowaddgroup, arr_images));
+		
+//		spinnerPicGroup.setAdapter(new MyAdapter(ma,
+//				R.layout.activity_rowaddgroup, arr_images));
 		
 		return rootView;
 	}
