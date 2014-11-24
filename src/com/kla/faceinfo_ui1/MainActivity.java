@@ -12,8 +12,10 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import com.facepp.http.HttpRequests;
+
 import com.sromku.simple.fb.SimpleFacebook;
+
+import database.DBManager;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -44,6 +46,9 @@ public class MainActivity extends Activity {
 	public JSONObject result;
 	private SimpleFacebook mSimpleFacebook;
 	public String namegroup2;
+	private DBManager dbManager;
+
+
 
 	public String[][] data = new String[][] { { "Fah", R.drawable.fah + "" },
 			{ "Jay", R.drawable.jay + "" }, { "Kla", R.drawable.kla + "" },
@@ -58,10 +63,9 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		tf = Typeface.createFromAsset(getAssets(), "SukhumvitSet.ttc");
 
+		dbManager = new DBManager(this);
 		mSimpleFacebook = SimpleFacebook.getInstance(this);
-		
 		mTitle = mDrawerTitle = getTitle();
-		
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
@@ -257,4 +261,8 @@ public class MainActivity extends Activity {
 		mSimpleFacebook.onActivityResult(this, requestCode, resultCode, data);
 	}
 
+	public DBManager getDbManager(){
+		return dbManager;
+		
+	}
 }

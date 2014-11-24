@@ -15,6 +15,8 @@ import com.sromku.simple.fb.listeners.OnLoginListener;
 import com.sromku.simple.fb.listeners.OnLogoutListener;
 import com.sromku.simple.fb.utils.Utils;
 
+import database.DBManager;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Html;
@@ -35,6 +37,7 @@ public class TestFacebookDatabaseFrangment extends Fragment{
 	MainActivity ma;
 	SimpleFacebook mSimpleFacebook;
 	String result;
+	DBManager dbManager;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +45,7 @@ public class TestFacebookDatabaseFrangment extends Fragment{
 		View rootView = inflater.inflate(R.layout.activity_testfacebook, container,false);
 		
 		ma = (MainActivity) this.getActivity();
+		dbManager = ma.getDbManager();
 		mSimpleFacebook = SimpleFacebook.getInstance();
 		btnLogin = (Button) rootView.findViewById(R.id.login_facebook_button);
 		btnReset = (Button) rootView.findViewById(R.id.reset_button);
@@ -113,11 +117,14 @@ public class TestFacebookDatabaseFrangment extends Fragment{
 								result += Utils.join(response.iterator(), "<br>", new Utils.Process<Profile>() {
 									@Override
 									public String process(Profile profile) {
+										System.out.println(profile.getName());
+										dbManager.insertContacts(profile.getName());
 										return  profile.getName();
 									}
 								});
 								result += "<br>";
 								txtDetail.setText(Html.fromHtml(result));
+								
 
 
 							}
