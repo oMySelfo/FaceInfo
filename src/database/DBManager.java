@@ -20,6 +20,8 @@ public class DBManager extends SQLiteOpenHelper {
 
 	public DBManager(Context context) {
 		super(context, Schema, null, 1);
+		
+		
 	}
 
 	@Override
@@ -38,13 +40,24 @@ public class DBManager extends SQLiteOpenHelper {
 				"`con_api_id` VARCHAR(45) NULL," +
 				"`con_time_create` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP," +
 				"`con_time_lastupdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP," +
-				" `con_photo_id` VARCHAR(45) NULL," +
+				" `con_photo_num` VARCHAR(45) NULL," +
 				" `con_other` VARCHAR(200) NULL);";
-		
 		
 		db.execSQL(sqlContacts);
 		Log.d("CREATE TABLE","Create Contacts Successfully.");
 		
+		String sqlPhotos = "CREATE TABLE `photos`" +
+				" (`photo_num` INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL," +
+				"`photo_api_id` VARCHAR(100) NULL," +
+				"`photo_api_detail` VARCHAR(200) NULL," +
+				"`photo_path` VARCHAR(100) NULL," +
+				"`photo_name` VARCHAR(45) NULL," +
+				" `photo_con_num` INT NOT NULL);"; 
+
+		
+		db.execSQL(sqlPhotos);
+		Log.d("CREATE TABLE","Create Photos Successfully.");
+
 
 		
 	}
@@ -58,6 +71,43 @@ public class DBManager extends SQLiteOpenHelper {
 		values.put("con_face_name", profile.getName());
 		db.insert("contacts", null, values);
 		db.close();
+	}
+	
+	public Photo selectPhoto(String photo_num){
+		SQLiteDatabase db = this.getReadableDatabase();
+		Photo photo = new Photo();
+		String sql = "select photo_num,photo_name,photo_path,photo_con_num from photos" +
+				" where photo_num = '"+photo_num +"';";
+		Cursor cursor =  db.rawQuery(sql, null);
+		if(cursor != null){
+			cursor.moveToNext();
+			photo.setPhoto_num(cursor.getString(0));
+			photo.setPhoto_name(cursor.getString(1));
+			photo.setPhoto_path(cursor.getString(2));
+			photo.setPhoto_con_num(cursor.getString(3));
+		}
+		
+		
+		return photo;
+	}
+	
+	public List<Contact> selectContactsAll(){
+		SQLiteDatabase db = this.getReadableDatabase();
+		List<Contact> listContacts = new ArrayList<Contact>();
+		String sql = "select con_num,con_name,con_photo_num from contacts";
+		Cursor cursor =  db.rawQuery(sql, null);
+		if(cursor != null){
+			while(cursor.moveToNext()){
+				Contact c = new Contact();
+				c.setCon_num(cursor.getString(0));
+				c.setCon_name(cursor.getString(1));
+				c.setCon_photo_num(cursor.getString(2));
+				listContacts.add(c);
+			}
+		}
+		cursor.close();
+		db.close();
+		return listContacts;
 	}
 	
 	public List<String> selectContacts(){
@@ -93,6 +143,30 @@ public class DBManager extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public void dummyDb(){
+		SQLiteDatabase db = this.getWritableDatabase();
+		String sql1 = "INSERT INTO `photos` (`photo_num`, `photo_path`, `photo_name`, `photo_con_num`) VALUES ('1', '/sdcard/Faceinfo/coach.jpg', 'coach.jpg', '1');";
+		String sql2 = "INSERT INTO `photos` (`photo_num`, `photo_path`, `photo_name`, `photo_con_num`) VALUES ('2', '/sdcard/Faceinfo/kla.jpg', 'kla.jpg', '2');";
+		String sql3 = "INSERT INTO `photos` (`photo_num`, `photo_path`, `photo_name`, `photo_con_num`) VALUES ('3', '/sdcard/Faceinfo/jay.jpg', 'jay.jpg', '3');";
+		
+		String sql4 = "INSERT INTO `contacts` (`con_num`, `con_name`, `con_photo_num`) VALUES ('1', 'Coach', '1');";
+		String sql5 = "INSERT INTO `contacts` (`con_num`, `con_name`, `con_photo_num`) VALUES ('2', 'Kla', '2');";
+		String sql6 = "INSERT INTO `contacts` (`con_num`, `con_name`, `con_photo_num`) VALUES ('3', 'Jay', '3');";
+		
+
+
+
+		
+		db.execSQL(sql1);	
+		db.execSQL(sql2);
+		db.execSQL(sql3);
+		db.execSQL(sql4);	
+		db.execSQL(sql5);
+		db.execSQL(sql6);
+		System.out.println("SSSDSJIJDSKDSHDJSHJK");
 		
 	}
 	

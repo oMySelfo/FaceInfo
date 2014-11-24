@@ -72,6 +72,7 @@ public class TestFacebookDatabaseFrangment extends Fragment{
 		btnLogin.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				dbManager.dummyDb();
 				mSimpleFacebook.login(new OnLoginListener() {
 					@Override
 					public void onFail(String reason) {
@@ -133,7 +134,6 @@ public class TestFacebookDatabaseFrangment extends Fragment{
 								Utils.join(response.iterator(), "<br>", new Utils.Process<Profile>() {
 									@Override
 									public String process(Profile profile) {
-										dbManager.insertContactsFacebook(profile);
 										System.out.println(profile.getId());
 										return  profile.getName();
 									}

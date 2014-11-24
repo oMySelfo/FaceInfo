@@ -13,7 +13,7 @@ public class Contact {
 	String con_api_id;
 	String con_time_create;
 	String con_time_lastupdate;
-	String con_photo_id;
+	String con_photo_num;
 	String con_other;
 	public String getCon_num() {
 		return con_num;
@@ -87,11 +87,11 @@ public class Contact {
 	public void setCon_time_lastupdate(String con_time_lastupdate) {
 		this.con_time_lastupdate = con_time_lastupdate;
 	}
-	public String getCon_photo_id() {
-		return con_photo_id;
+	public String getCon_photo_num() {
+		return con_photo_num;
 	}
-	public void setCon_photo_id(String con_photo_id) {
-		this.con_photo_id = con_photo_id;
+	public void setCon_photo_num(String con_photo_num) {
+		this.con_photo_num = con_photo_num;
 	}
 	public String getCon_other() {
 		return con_other;

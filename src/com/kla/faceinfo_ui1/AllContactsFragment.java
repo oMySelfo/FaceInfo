@@ -9,6 +9,10 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import database.Contact;
+import database.DBManager;
+import database.Photo;
+
 
 
 import android.app.AlertDialog;
@@ -50,6 +54,8 @@ public class AllContactsFragment extends Fragment {
 	public static final int REQUEST_CAMERA = 2;
 	JSONObject result;
 	private ListView listView;
+	DBManager dbManager;
+	List<Contact> listContacts;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -59,20 +65,30 @@ public class AllContactsFragment extends Fragment {
 		ma = (MainActivity) this.getActivity();
 		fp = ma.getFaceProcessing();
 		result = ma.getResult();
-		
+		dbManager = ma.getDbManager();
+		listContacts = dbManager.selectContactsAll();
 		
 		TextView tv = (TextView) rootView.findViewById(R.id.amount_friends);
 		tv.setTypeface(ma.tf);
-		tv.setText(ma.data.length + " FRIENDS");
+		tv.setText(listContacts.size() + " FRIENDS");
 
 		String[] from = { "pic", "name" };
 		int[] to = { R.id.pic, R.id.txtName };
 
 		List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
-		for (int i = 0; i < ma.data.length; i++) {
+//		for (int i = 0; i < listContacts.size(); i++) {
+//			HashMap<String, String> hm = new HashMap<String, String>();
+//			hm.put("name", ma.data[i][0]);
+//			hm.put("pic", ma.data[i][1] + "");
+//			aList.add(hm);
+//		}
+		
+		for( Contact c:listContacts){
+			Photo p = dbManager.selectPhoto(c.getCon_photo_num());
 			HashMap<String, String> hm = new HashMap<String, String>();
-			hm.put("name", ma.data[i][0]);
-			hm.put("pic", ma.data[i][1] + "");
+			hm.put("name", c.getCon_name());
+			hm.put("pic", p.getBitmap().toString());
+			System.out.println(p.getBitmap().getHeight());
 			aList.add(hm);
 		}
 
