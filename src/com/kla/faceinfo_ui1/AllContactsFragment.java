@@ -19,10 +19,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
+import android.view.ContextMenu;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -87,6 +90,7 @@ public class AllContactsFragment extends Fragment {
                 ma.displayView(13);
             }
         });
+		registerForContextMenu(listView);
 
 		//Cick find button
 		ImageButton findbtt = (ImageButton) rootView.findViewById(R.id.findbtt);
@@ -134,6 +138,29 @@ public class AllContactsFragment extends Fragment {
         }
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+	
+	@Override 
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
+    {
+            super.onCreateContextMenu(menu, v, menuInfo);
+            //menu.setHeaderTitle("Select The Action");  
+            menu.add(0, v.getId(), 0, "Delete");//groupId, itemId, order, title 
+            menu.add(0, v.getId(), 0, "Edit"); 
+    } 
+	
+	@Override  
+    public boolean onContextItemSelected(MenuItem item){  
+            if(item.getTitle()=="Delete"){
+            	System.out.println("Delete");
+            }  
+            else if(item.getTitle()=="Edit"){
+            	System.out.println("Edit");
+            }else{
+               return false;
+            }  
+          return true;  
+                            
+      }  
 
 	
 	
