@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -44,6 +45,7 @@ public class AllContactsFragment extends Fragment {
 	MainActivity ma;
 	public static final int REQUEST_CAMERA = 2;
 	JSONObject result;
+	private ListView listView;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class AllContactsFragment extends Fragment {
 
 		SimpleAdapter adapter = new SimpleAdapter(ma, aList,
 				R.layout.activity_row, from, to);
-		ListView listView = (ListView) rootView.findViewById(R.id.listview);
+		listView = (ListView) rootView.findViewById(R.id.listview);
 		listView.setAdapter(adapter);
 		
 		
@@ -90,7 +92,25 @@ public class AllContactsFragment extends Fragment {
                 ma.displayView(13);
             }
         });
+		
 		registerForContextMenu(listView);
+		listView.setOnItemLongClickListener(new OnItemLongClickListener(){
+			@Override
+			public boolean onItemLongClick(AdapterView<?> view, View container,
+					int position, long id) {
+				view.showContextMenu();
+				LinearLayout linearLayoutParent = (LinearLayout) container;
+                LinearLayout linearLayoutChild = (LinearLayout ) linearLayoutParent.getChildAt(1);
+
+                TextView txt = (TextView) linearLayoutChild.getChildAt(0);
+                String tv = txt.getText().toString();
+                System.out.println(tv);
+				return true;
+			}
+			
+		});
+		
+		
 
 		//Cick find button
 		ImageButton findbtt = (ImageButton) rootView.findViewById(R.id.findbtt);
