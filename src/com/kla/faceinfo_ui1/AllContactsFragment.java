@@ -9,9 +9,13 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+
+
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -172,6 +176,7 @@ public class AllContactsFragment extends Fragment {
     public boolean onContextItemSelected(MenuItem item){  
             if(item.getTitle()=="Delete"){
             	System.out.println("Delete");
+            	alertDiaLog();
             }  
             else if(item.getTitle()=="Edit"){
             	System.out.println("Edit");
@@ -181,7 +186,28 @@ public class AllContactsFragment extends Fragment {
           return true;  
                             
       }  
-
+	
+	public void alertDiaLog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(ma);
+    	builder.setTitle("Delete").setIcon(getResources().getDrawable(R.drawable.newlogo))
+    	.setMessage("Are you sure you want to delete ?")
+    	.setPositiveButton("Not Now", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		}).setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				ma.displayView(0);
+			}
+		});
+    	
+    	// Alert Dialog
+    	AlertDialog alert = builder.create();
+    	alert.show();
+	}
 	
 	
 }
