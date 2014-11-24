@@ -45,8 +45,8 @@ public class AllContactsFragment extends Fragment {
 	public AllContactsFragment() {}
 
 	FaceProcessing fp;
-	Uri uri;
 	MainActivity ma;
+	Uri uri;
 	public static final int REQUEST_CAMERA = 2;
 	JSONObject result;
 	private ListView listView;

@@ -1,16 +1,27 @@
 package com.kla.faceinfo_ui1;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import org.json.JSONObject;
 
 import widget.CreateEdittext;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.MediaStore.Images.Media;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -23,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -30,13 +42,17 @@ public class AddINFOFragment extends Fragment {
 	public AddINFOFragment() {
 	}
 
+	FaceProcessing fp;
+	JSONObject result;
 	CreateEdittext edittext;
 	MainActivity ma;
 	List<CreateEdittext> edit;
-	ImageButton tack_picture;
+	ImageButton take_picture;
 	View rootView;
 	Button btn;
 	Button btn_Done;
+	Uri uri;
+	public static final int REQUEST_CAMERA = 2;
 
 	String[] Namemenu = new String[] { "Full Name", "Facebook", "Twitter",
 			"Birthday", "Address", "Others" };
@@ -45,13 +61,25 @@ public class AddINFOFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 
 		rootView = inflater
 				.inflate(R.layout.activity_addinfo, container, false);
-		tack_picture = (ImageButton) rootView.findViewById(R.id.add_pic);
+		take_picture = (ImageButton) rootView.findViewById(R.id.add_pic);
+		take_picture.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				
+			}
+		});
+		
 
 		edit = new ArrayList<CreateEdittext>();
 		ma = (MainActivity) this.getActivity();
+		fp = ma.getFaceProcessing();
 		for (int i = 0; i < Namemenu.length; i++) {
 			edittext = new CreateEdittext(ma);
 			edittext.setId(i);
@@ -88,8 +116,8 @@ public class AddINFOFragment extends Fragment {
 		});
 		layout.addView(btn_Done);
 		
-		registerForContextMenu(tack_picture);
-		tack_picture.setOnClickListener(new OnClickListener(){
+		registerForContextMenu(take_picture);
+		take_picture.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				((ImageButton) v).showContextMenu();
@@ -101,6 +129,33 @@ public class AddINFOFragment extends Fragment {
 	}
 	
 	
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub\
+		if (requestCode == REQUEST_CAMERA && resultCode == ma.RESULT_OK) {
+            ma.getContentResolver().notifyChange(uri, null); 
+            ContentResolver cr = ma.getContentResolver();
+            try {
+                Bitmap bitmap = Media.getBitmap(cr, uri);
+                //imageView.setImageBitmap(bitmap);
+                System.out.println(bitmap.getWidth()+" "+bitmap.getHeight());
+           
+               
+                Toast.makeText(ma.getApplicationContext()
+                        , uri.getPath(), Toast.LENGTH_LONG).show();
+                result = fp.FaceIdentify(bitmap);
+                ma.setResult(result);
+                ma.displayView(9);
+                
+            } catch (Exception e) {
+                 e.printStackTrace();
+            }
+        }
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+
 
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -148,8 +203,23 @@ public class AddINFOFragment extends Fragment {
 
 				}
 			}
-
+		}if(item.getTitle().equals("TakePicture")){
+			
+			 Intent it = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+             String timeStamp = 
+                     new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+             String imageFileName = "IMG_" + timeStamp + ".jpg";
+             File f = new File(Environment.getExternalStorageDirectory()
+                     , "DCIM/Camera/" + imageFileName);
+             uri = Uri.fromFile(f);
+             it.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+             startActivityForResult(Intent.createChooser(it
+                     , "Take a picture"), REQUEST_CAMERA);
+			
 		}
+			
+
+		
 
 		return true;
 	}
