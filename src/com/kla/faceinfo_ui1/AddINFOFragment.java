@@ -1,12 +1,15 @@
 package com.kla.faceinfo_ui1;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import widget.CreateEdittext;
@@ -52,6 +55,8 @@ public class AddINFOFragment extends Fragment {
 	Button btn;
 	Button btn_Done;
 	Uri uri;
+	Bitmap bitmap2 = null;
+	public static final int REQUEST_GALLERY = 1;
 	public static final int REQUEST_CAMERA = 2;
 
 	String[] Namemenu = new String[] { "Full Name", "Facebook", "Twitter",
@@ -66,15 +71,7 @@ public class AddINFOFragment extends Fragment {
 		rootView = inflater
 				.inflate(R.layout.activity_addinfo, container, false);
 		take_picture = (ImageButton) rootView.findViewById(R.id.add_pic);
-		take_picture.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-				
-			}
-		});
+		
 		
 
 		edit = new ArrayList<CreateEdittext>();
@@ -121,6 +118,8 @@ public class AddINFOFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				((ImageButton) v).showContextMenu();
+				take_picture.setImageResource(R.drawable.tack_picture);
+				
 			}
 		});
 		
@@ -139,28 +138,40 @@ public class AddINFOFragment extends Fragment {
             try {
                 Bitmap bitmap = Media.getBitmap(cr, uri);
                 //imageView.setImageBitmap(bitmap);
-                System.out.println(bitmap.getWidth()+" "+bitmap.getHeight());
-           
-               
+                System.out.println(bitmap.getWidth()+" "+bitmap.getHeight());  
                 Toast.makeText(ma.getApplicationContext()
                         , uri.getPath(), Toast.LENGTH_LONG).show();
-                result = fp.FaceIdentify(bitmap);
-                System.out.println(result.getJSONArray("face"));
-                if(result.getJSONArray("face").length()==0 || result.getJSONArray("face").length()>1){
-                	//Dialog
-                }
-                else{
-                	take_picture.setImageBitmap(bitmap);
-                	//
-                }
-                //ma.setResult(result);
-                
-               // ma.displayView(9);
-                
+                bitmap2 = bitmap;
             } catch (Exception e) {
                  e.printStackTrace();
             }
+        }else if(requestCode == REQUEST_GALLERY && resultCode == ma.RESULT_OK){
+        	Uri uri = data.getData(); 
+        	System.out.println("Gallery------------------------");
+        	Bitmap bitmap = null;
+    		try {
+    			bitmap = Media.getBitmap(ma.getContentResolver(), uri);
+    			bitmap2 = bitmap;
+    		} catch (FileNotFoundException e) {
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    		
         }
+		try {
+			result = fp.FaceIdentify(bitmap2);
+			System.out.println(result.getJSONArray("face"));
+			 if(result.getJSONArray("face").length()==0 || result.getJSONArray("face").length()>1){
+				 alertDiaLog_ChangePicture();
+		        }
+		        else{
+		        	take_picture.setImageBitmap(bitmap2);
+		        }
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
@@ -226,16 +237,34 @@ public class AddINFOFragment extends Fragment {
              startActivityForResult(Intent.createChooser(it
                      , "Take a picture"), REQUEST_CAMERA);
 			
+		}else if(item.getTitle().equals("Gallery")){
+			 Intent itGallery = new Intent(Intent.ACTION_GET_CONTENT);
+		     itGallery.setType("image/*");
+		     startActivityForResult(Intent.createChooser(itGallery
+		             , "Select Picture"), REQUEST_GALLERY);
 		}
-			
-
-		
-
 		return true;
 	}
-
+	
 	public int dpToPx(int dp) {
 		return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+	}
+	
+	private void alertDiaLog_ChangePicture(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(ma);
+    	builder.setTitle("Change New Picture").setIcon(getResources().getDrawable(R.drawable.newlogo))
+    	.setMessage("Please Select New Picture")
+    	.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+    	
+    	// Alert Dialog
+    	AlertDialog alert = builder.create();
+    	alert.show();
 	}
 
 }

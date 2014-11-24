@@ -60,7 +60,8 @@ public class FaceProcessing {
 			}
 		}).start();
 		int count = 0;
-		while (result == null) {
+		result = null;
+		while (result == null || count > 10) {
 			SystemClock.sleep(1000);
 			System.out.println(++count);
 		}
