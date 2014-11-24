@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+
 import database.Contact;
 import database.DBManager;
 import database.Photo;
@@ -167,7 +168,6 @@ public class AllContactsFragment extends Fragment {
                 Toast.makeText(ma.getApplicationContext()
                         , uri.getPath(), Toast.LENGTH_LONG).show();
                 
-               
                 result = fp.FaceIdentify(bitmap);
                 ma.setResult(result);
                 ma.displayView(9);
@@ -196,6 +196,7 @@ public class AllContactsFragment extends Fragment {
             }  
             else if(item.getTitle()=="Edit"){
             	System.out.println("Edit");
+            	
             }else{
                return false;
             }  

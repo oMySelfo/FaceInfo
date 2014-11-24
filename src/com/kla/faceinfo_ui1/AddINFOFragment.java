@@ -161,7 +161,8 @@ public class AddINFOFragment extends Fragment {
         }
 		try {
 			result = fp.FaceIdentify(bitmap2);
-			System.out.println(result.getJSONArray("face"));
+			
+			System.out.println(bitmap2+"-----------------------------------------------------------");
 			 if(result.getJSONArray("face").length()==0 || result.getJSONArray("face").length()>1){
 				 alertDiaLog_ChangePicture();
 		        }
@@ -172,6 +173,7 @@ public class AddINFOFragment extends Fragment {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
