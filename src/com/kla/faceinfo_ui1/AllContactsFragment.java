@@ -187,7 +187,7 @@ public class AllContactsFragment extends Fragment {
                             
       }  
 	
-	public void alertDiaLog(){
+	private void alertDiaLog(){
 		AlertDialog.Builder builder = new AlertDialog.Builder(ma);
     	builder.setTitle("Delete").setIcon(getResources().getDrawable(R.drawable.newlogo))
     	.setMessage("Are you sure you want to delete ?")
@@ -200,6 +200,7 @@ public class AllContactsFragment extends Fragment {
 		}).setNegativeButton("Yes", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				//delete profile
 				ma.displayView(0);
 			}
 		});

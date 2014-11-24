@@ -8,7 +8,9 @@ import com.kla.faceinfo_ui1.MainActivity;
 import com.kla.faceinfo_ui1.R;
 
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -33,6 +35,7 @@ public class GrouplistFragment extends Fragment{
 	public int a;
 	String[][] dataGroup = new String[][] { { "Friends", R.drawable.friend_cl + "" },
 			{ "Family", R.drawable.family_cl + "" },{"Work", R.drawable.work_cl + "" }};
+	MainActivity ma;
 	
 	
 	@Override
@@ -40,6 +43,7 @@ public class GrouplistFragment extends Fragment{
             Bundle savedInstanceState) {
 		
 		View rootView = inflater.inflate(R.layout.activity_listgroup, container,false);
+		ma = (MainActivity) this.getActivity();
 		final MainActivity ma = (MainActivity) this.getActivity();
 		
 		
@@ -124,13 +128,36 @@ public class GrouplistFragment extends Fragment{
     public boolean onContextItemSelected(MenuItem item){  
             if(item.getTitle()=="Delete"){
             	System.out.println("Delete");
-            	
+            	alertDiaLog();
             } else{
                return false;
             }  
           return true;  
                             
       }  
+	
+	private void alertDiaLog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(ma);
+    	builder.setTitle("Delete").setIcon(getResources().getDrawable(R.drawable.newlogo))
+    	.setMessage("Are you sure you want to delete ?")
+    	.setPositiveButton("Not Now", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		}).setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				//delete profile
+				ma.displayView(3);
+			}
+		});
+    	
+    	// Alert Dialog
+    	AlertDialog alert = builder.create();
+    	alert.show();
+	}
 	
 
 }

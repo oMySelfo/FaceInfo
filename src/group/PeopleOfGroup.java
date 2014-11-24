@@ -7,7 +7,9 @@ import java.util.List;
 import com.kla.faceinfo_ui1.MainActivity;
 import com.kla.faceinfo_ui1.R;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -22,6 +24,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 public class PeopleOfGroup extends Fragment{
 	public PeopleOfGroup(){}
@@ -67,6 +70,24 @@ public class PeopleOfGroup extends Fragment{
                 System.out.println(namePeoPle);
             }
         });
+		
+		registerForContextMenu(listView);
+		listView.setOnItemLongClickListener(new OnItemLongClickListener(){
+			@Override
+			public boolean onItemLongClick(AdapterView<?> view, View container,
+					int position, long id) {
+				view.showContextMenu();
+				LinearLayout linearLayoutParent = (LinearLayout) container;
+                LinearLayout linearLayoutChild = (LinearLayout ) linearLayoutParent.getChildAt(1);
+
+                TextView txt = (TextView) linearLayoutChild.getChildAt(0);
+                String tv = txt.getText().toString();
+                System.out.println(tv);
+				return true;
+			}
+			
+		});
+		
 		return rootView;
 	}
 	
@@ -83,11 +104,33 @@ public class PeopleOfGroup extends Fragment{
     public boolean onContextItemSelected(MenuItem item){  
             if(item.getTitle()=="Delete"){
             	System.out.println("Delete");
-            	
+            	alertDiaLog();
             } else{
                return false;
             }  
           return true;  
                             
-      }  
+      }
+	private void alertDiaLog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(ma);
+    	builder.setTitle("Delete").setIcon(getResources().getDrawable(R.drawable.newlogo))
+    	.setMessage("Are you sure you want to delete ?")
+    	.setPositiveButton("Not Now", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		}).setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				//delete profile
+				ma.displayView(12);
+			}
+		});
+    	
+    	// Alert Dialog
+    	AlertDialog alert = builder.create();
+    	alert.show();
+	}
 }

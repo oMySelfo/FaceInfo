@@ -1,7 +1,9 @@
 package com.kla.faceinfo_ui1;
 
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,6 +20,7 @@ public class ShowProfile extends Fragment{
 	View rootView ;
 	ImageButton edit;
 	ImageButton delete;
+	MainActivity ma;
 
 	public ShowProfile(){}
 	@Override
@@ -26,6 +29,7 @@ public class ShowProfile extends Fragment{
 	
 		
 		rootView = inflater.inflate(R.layout.acitivity_showprofile, container,false);
+		ma = (MainActivity) this.getActivity();
 		show_id = new int[][]{{R.id.show_txt_name,R.id.show_edit_name}
 										,{R.id.show_txt_phone,R.id.show_edit_phone}
 										,{R.id.show_txt_email,R.id.show_edit_email}
@@ -64,7 +68,7 @@ public class ShowProfile extends Fragment{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				//Alert
+				alertDiaLog();
 				//delete to database
 				//go to all contacks page
 				
@@ -81,6 +85,29 @@ public class ShowProfile extends Fragment{
 		if(!setedittxt){
 			//Update to database
 		}
+	}
+	
+	private void alertDiaLog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(ma);
+    	builder.setTitle("Delete").setIcon(getResources().getDrawable(R.drawable.newlogo))
+    	.setMessage("Are you sure you want to delete ?")
+    	.setPositiveButton("Not Now", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		}).setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				//delete profile
+				ma.displayView(0);
+			}
+		});
+    	
+    	// Alert Dialog
+    	AlertDialog alert = builder.create();
+    	alert.show();
 	}
 		
 		
