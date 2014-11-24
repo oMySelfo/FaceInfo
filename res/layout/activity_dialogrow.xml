@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/dialog_pic"
+        android:layout_width="63dp"
+        android:layout_height="96dp"
+        android:layout_weight="0.24"
+         />
+
+    <TextView
+        android:id="@+id/dialog_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="390dp"
+        android:layout_weight="0.79"
+        android:text="TextView" />
+
+</LinearLayout>

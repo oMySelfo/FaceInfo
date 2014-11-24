@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/new_game"
+        android:icon="@drawable/edit_mini"
+        android:title="New Game"/>
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/bin_mini"
+        android:title="Settings"/>
+
+
+</menu>
