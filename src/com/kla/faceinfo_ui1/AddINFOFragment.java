@@ -145,8 +145,17 @@ public class AddINFOFragment extends Fragment {
                 Toast.makeText(ma.getApplicationContext()
                         , uri.getPath(), Toast.LENGTH_LONG).show();
                 result = fp.FaceIdentify(bitmap);
-                ma.setResult(result);
-                ma.displayView(9);
+                System.out.println(result.getJSONArray("face"));
+                if(result.getJSONArray("face").length()==0 || result.getJSONArray("face").length()>1){
+                	//Dialog
+                }
+                else{
+                	take_picture.setImageBitmap(bitmap);
+                	//
+                }
+                //ma.setResult(result);
+                
+               // ma.displayView(9);
                 
             } catch (Exception e) {
                  e.printStackTrace();
@@ -154,6 +163,7 @@ public class AddINFOFragment extends Fragment {
         }
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+	
 
 
 
