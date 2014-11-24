@@ -36,6 +36,7 @@ public class AddINFOFragment extends Fragment {
 	ImageButton tack_picture;
 	View rootView;
 	Button btn;
+	Button btn_Done;
 
 	String[] Namemenu = new String[] { "Full Name", "Facebook", "Twitter",
 			"Birthday", "Address", "Others" };
@@ -64,7 +65,7 @@ public class AddINFOFragment extends Fragment {
 		btn = new Button(ma);
 		btn.setText("Add another field");
 		registerForContextMenu(btn);
-		registerForContextMenu(tack_picture);
+		
 		btn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -75,9 +76,31 @@ public class AddINFOFragment extends Fragment {
 		});
 		LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.layout);
 		layout.addView(btn);
+		
+		btn_Done = new Button(ma);
+		btn_Done.setText("Done");
+		btn_Done.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}	
+		});
+		layout.addView(btn_Done);
+		
+		registerForContextMenu(tack_picture);
+		tack_picture.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				((ImageButton) v).showContextMenu();
+			}
+		});
+		
 
 		return rootView;
 	}
+	
+	
 
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -114,10 +137,14 @@ public class AddINFOFragment extends Fragment {
 													// right, bottom);
 					tv.setLayoutParams(llp);
 					edit.get(i).setLayoutParams(llp);
+					
 					layout.removeView(btn);
 					layout.addView(tv);
 					layout.addView(edit.get(i));
 					layout.addView(btn);
+					
+					layout.removeView(btn_Done);
+					layout.addView(btn_Done);					
 
 				}
 			}
