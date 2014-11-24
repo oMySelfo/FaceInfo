@@ -1,5 +1,13 @@
 package facebook;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import com.kla.faceinfo_ui1.MainActivity;
@@ -17,8 +25,14 @@ import com.sromku.simple.fb.utils.Utils;
 
 import database.DBManager;
 
+import android.app.DownloadManager;
 import android.app.Fragment;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +41,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TestFacebookDatabaseFrangment extends Fragment{
 	public TestFacebookDatabaseFrangment(){}
@@ -51,7 +66,8 @@ public class TestFacebookDatabaseFrangment extends Fragment{
 		btnReset = (Button) rootView.findViewById(R.id.reset_button);
 		txtDetail = (TextView) rootView.findViewById(R.id.facebook_detail_text);
 		
-		
+		result = "https://graph.facebook.com/1651958423/picture?type=large";
+		downloadFile(result);
 
 		btnLogin.setOnClickListener(new OnClickListener() {
 			@Override
@@ -90,6 +106,7 @@ public class TestFacebookDatabaseFrangment extends Fragment{
 						.add(Profile.Properties.GENDER)
 						.add(Profile.Properties.INSTALLED)
 						.add(Profile.Properties.NAME)
+						.add(Profile.Properties.PICTURE)
 						.build();
 						
 						mSimpleFacebook.getFriends(properties, new OnFriendsListener() {
@@ -111,22 +128,26 @@ public class TestFacebookDatabaseFrangment extends Fragment{
 
 							@Override
 							public void onComplete(List<Profile> response) {
-								
-								// make the result more readable. 
-								
-								result += Utils.join(response.iterator(), "<br>", new Utils.Process<Profile>() {
+
+
+								Utils.join(response.iterator(), "<br>", new Utils.Process<Profile>() {
 									@Override
 									public String process(Profile profile) {
-										System.out.println(profile.getName());
-										dbManager.insertContacts(profile.getName());
+										dbManager.insertContactsFacebook(profile);
+										System.out.println(profile.getId());
 										return  profile.getName();
 									}
 								});
-								result += "<br>";
+
+								
+									for(String con_name: dbManager.selectContacts()){
+										result+=con_name;
+										result += "<br>";
+									}
+								
+									
 								txtDetail.setText(Html.fromHtml(result));
 								
-
-
 							}
 
 						});
@@ -171,6 +192,33 @@ public class TestFacebookDatabaseFrangment extends Fragment{
 		
 		
 		return rootView;
+	}
+	
+
+	void downloadFile(String uRl) {
+	    File direct = new File(Environment.getExternalStorageDirectory()
+	            + "/Faceinfo/Img");
+
+	    if (!direct.exists()) {
+	        direct.mkdirs();
+	    }
+
+	    DownloadManager mgr = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+
+	    Uri downloadUri = Uri.parse(uRl);
+	    DownloadManager.Request request = new DownloadManager.Request(
+	            downloadUri);
+
+	    request.setAllowedNetworkTypes(
+	            DownloadManager.Request.NETWORK_WIFI
+	                    | DownloadManager.Request.NETWORK_MOBILE)
+	            .setAllowedOverRoaming(false).setTitle("Demo")
+	            .setDescription("Something useful. No, really.")
+	            .setDestinationInExternalPublicDir("/Faceinfo/Img", "fileName.jpg");
+
+	    mgr.enqueue(request);
+
+	    
 	}
 
 }

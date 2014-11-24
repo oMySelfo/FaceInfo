@@ -69,6 +69,7 @@ public class MainActivity extends Activity {
 		tf = Typeface.createFromAsset(getAssets(), "SukhumvitSet.ttc");
 
 		dbManager = new DBManager(this);
+		
 		mSimpleFacebook = SimpleFacebook.getInstance(this);
 
 

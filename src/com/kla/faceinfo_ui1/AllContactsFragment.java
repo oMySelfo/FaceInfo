@@ -53,7 +53,7 @@ public class AllContactsFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.activity_allcontacts,
 				container, false);
 		ma = (MainActivity) this.getActivity();
-		fp = ma.getFaceProcessing();//////////////////////////////////
+		fp = ma.getFaceProcessing();
 		result = ma.getResult();
 		
 		

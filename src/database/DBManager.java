@@ -1,5 +1,10 @@
 package database;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sromku.simple.fb.entities.Profile;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -19,8 +24,8 @@ public class DBManager extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String sqlContacts = "CREATE TABLE `faceinfo`.`contacts` " +
-				"(`con_num` INT NOT NULL AUTO_INCREMENT," +
+		String sqlContacts = "CREATE TABLE `contacts` " +
+				"(`con_num` INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL," +
 				"`con_name` VARCHAR(45) NOT NULL," +
 				"`con_tel` VARCHAR(45) NULL," +
 				"`con_address` VARCHAR(100) NULL," +
@@ -32,10 +37,9 @@ public class DBManager extends SQLiteOpenHelper {
 				" `con_birthday` DATETIME NULL," +
 				"`con_api_id` VARCHAR(45) NULL," +
 				"`con_time_create` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP," +
-				"`con_time_lastupdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
+				"`con_time_lastupdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP," +
 				" `con_photo_id` VARCHAR(45) NULL," +
-				" `con_other` VARCHAR(200) NULL," +
-				"PRIMARY KEY (`con_num`));";
+				" `con_other` VARCHAR(200) NULL);";
 		
 		
 		db.execSQL(sqlContacts);
@@ -45,26 +49,31 @@ public class DBManager extends SQLiteOpenHelper {
 		
 	}
 	
-	public void insertContacts(String con_name){
+	public void insertContactsFacebook(Profile profile){
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put("con_name", con_name);
+		values.put("con_name", profile.getName());
+		values.put("con_face_id", profile.getName());
+		values.put("con_email", profile.getName());
+		values.put("con_face_name", profile.getName());
 		db.insert("contacts", null, values);
 		db.close();
 	}
 	
-	public void selectContacts(String face_id){
+	public List<String> selectContacts(){
 		SQLiteDatabase db = this.getReadableDatabase();
+		List<String> resultList = new ArrayList<String>();
 		
-		String sql = "select * from contacts"; //+ where face_id = '1'
+		String sql = "select con_name from contacts"; //+ where face_id = '1'
 		Cursor cursor =  db.rawQuery(sql, null/*selectcolum*/);//or db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit)
 		if(cursor != null){
 			while(cursor.moveToNext()){
-				System.out.println(cursor.getString(0) +" : "+cursor.getString(1) +" : "+cursor.getString(2));
+				resultList.add(cursor.getString(0));
 			}
 		}
 		cursor.close();
 		db.close();
+		return resultList;
 	}
 	public void updateContacts(String face_id,String NewName,String NewTel){
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -86,5 +95,7 @@ public class DBManager extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 		
 	}
+	
+
 
 }
