@@ -10,9 +10,12 @@ import com.kla.faceinfo_ui1.R;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,7 +33,6 @@ public class PeopleOfGroup extends Fragment{
 		View rootView = inflater.inflate(R.layout.activity_peopleofgroup, container,false);
 		
 		ma =  (MainActivity) this.getActivity();
-		System.out.println("kla--------------->"+ma.namegroup2);
 		ma.setTitle(ma.namegroup2);
 		
 		
@@ -67,4 +69,25 @@ public class PeopleOfGroup extends Fragment{
         });
 		return rootView;
 	}
+	
+	@Override 
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
+    {
+            super.onCreateContextMenu(menu, v, menuInfo);
+            //menu.setHeaderTitle("Select The Action");  
+            menu.add(0, v.getId(), 0, "Delete");//groupId, itemId, order, title 
+            menu.add(0, v.getId(), 0, "Edit");
+    } 
+	
+	@Override  
+    public boolean onContextItemSelected(MenuItem item){  
+            if(item.getTitle()=="Delete"){
+            	System.out.println("Delete");
+            	
+            } else{
+               return false;
+            }  
+          return true;  
+                            
+      }  
 }

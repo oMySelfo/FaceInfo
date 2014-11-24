@@ -11,9 +11,12 @@ import com.kla.faceinfo_ui1.R;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -21,6 +24,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 public class GrouplistFragment extends Fragment{
 	public GrouplistFragment() {}
@@ -76,6 +80,23 @@ public class GrouplistFragment extends Fragment{
             }
         });
 		
+		registerForContextMenu(listViewGroup);
+		listViewGroup.setOnItemLongClickListener(new OnItemLongClickListener(){
+			@Override
+			public boolean onItemLongClick(AdapterView<?> view, View container,
+					int position, long id) {
+				view.showContextMenu();
+				LinearLayout linearLayoutParent = (LinearLayout) container;
+                LinearLayout linearLayoutChild = (LinearLayout ) linearLayoutParent.getChildAt(1);
+
+                TextView txt = (TextView) linearLayoutChild.getChildAt(0);
+                String tv = txt.getText().toString();
+                System.out.println(tv);
+				return true;
+			}
+			
+		});
+		
 		ImageButton bt_addGroup = (ImageButton) rootView.findViewById(R.id.btn_addgrop);
 		bt_addGroup.setOnClickListener(new View.OnClickListener() {
 			
@@ -84,8 +105,32 @@ public class GrouplistFragment extends Fragment{
 				ma.displayView(11);
 			}
 		});
+		
+		
+		
 		return rootView;
 	}
+	
+	@Override 
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
+    {
+            super.onCreateContextMenu(menu, v, menuInfo);
+            //menu.setHeaderTitle("Select The Action");  
+            menu.add(0, v.getId(), 0, "Delete");//groupId, itemId, order, title 
+            menu.add(0, v.getId(), 0, "Edit");
+    } 
+	
+	@Override  
+    public boolean onContextItemSelected(MenuItem item){  
+            if(item.getTitle()=="Delete"){
+            	System.out.println("Delete");
+            	
+            } else{
+               return false;
+            }  
+          return true;  
+                            
+      }  
 	
 
 }

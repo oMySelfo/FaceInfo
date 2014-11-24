@@ -13,30 +13,39 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-
 public class AddGroupFragment extends Fragment {
-	public AddGroupFragment() {}
+	public AddGroupFragment() {
+	}
 
-	String arr_images[] = { R.drawable.family_cl + "", R.drawable.friend_cl + "",
-			R.drawable.work_cl + "" };
-	
-	private MainActivity ma = (MainActivity) this.getActivity();
-	
-	
+	String arr_images[] = { R.drawable.family_cl + "",
+			R.drawable.friend_cl + "", R.drawable.work_cl + "",
+			R.drawable.etc1_cl + "", R.drawable.etc2_cl + "",
+			R.drawable.etc3_cl + "", R.drawable.etc3_cl + "",
+			R.drawable.etc4_cl + "", R.drawable.etc5_cl + "",
+			R.drawable.etc6_cl + "", R.drawable.etc7_cl + "" };
+
+	private MainActivity ma;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		View rootView = inflater.inflate(R.layout.actitvity_addgroup,
 				container, false);
 		System.out.println("TESSSSSS");
-		
+
 		Spinner spinnerPicGroup = (Spinner) rootView
 				.findViewById(R.id.spinner_picgroup);
-		
-//		spinnerPicGroup.setAdapter(new MyAdapter(ma,
-//				R.layout.activity_rowaddgroup, arr_images));
-		
+
+		ma = (MainActivity) this.getActivity();
+
+		System.out.println(ma);
+		System.out.println(R.layout.activity_rowaddgroup);
+		System.out.println(arr_images);
+
+		spinnerPicGroup.setAdapter(new MyAdapter(ma,
+				R.layout.activity_rowaddgroup, arr_images));
+
 		return rootView;
 	}
 
